@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
+def secretPropertiesFile = rootProject.file("app/secret.properties")
+def secretProperties = new Properties()
+secretProperties.load(new FileInputStream(secretPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -14,6 +18,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "USER_LOGIN", secretProperties['USER_LOGIN'])
+        buildConfigField("String", "USER_PASSWORD", secretProperties['USER_PASSWORD'])
     }
 
     buildTypes {

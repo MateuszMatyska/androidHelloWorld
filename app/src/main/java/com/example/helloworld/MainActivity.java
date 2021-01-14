@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         String loginValue = getLoginValue();
         String passwordValue = getPasswordValue();
 
-        if(loginValue.equals("admin") && passwordValue.equals("admin")) {
+        if(loginValue.equals(BuildConfig.USER_LOGIN) && passwordValue.equals(BuildConfig.USER_PASSWORD)) {
             getLoginMessage(true);
             drawBottomBorder(true);
         } else {
