@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,8 +37,19 @@ public class MyLocation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_location, container, false);
+        fillCityList(view);
         return view;
     }
 
+    private void fillCityList(View view) {
+        ListView list = view.findViewById(R.id.CityList);
 
+        ArrayList<City> cities = new ArrayList<City>();
+        cities.add(new City("Krakow"));
+        cities.add(new City("Warszawa"));
+
+        CityAdapter adapter = new CityAdapter(view.getContext(), cities);
+
+        list.setAdapter(adapter);
+    }
 }
