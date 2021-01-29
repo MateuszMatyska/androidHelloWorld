@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login"
+    android:layout_centerInParent="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_marginBottom="20dp"
+            android:textSize="30dp"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/android_flat"
+            tools:visibility="visible"/>
+
+        <EditText
+            android:id="@+id/loginInput"
+            android:inputType="text|textAutoComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/loginText"
+            android:backgroundTint="@color/grey"
+            android:ems="15" />
+
+        <EditText
+            android:id="@+id/passwordInput"
+            android:inputType="textPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/passwordText"
+            android:backgroundTint="@color/grey"
+            android:ems="15" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginBtn"
+            android:ems="15"
+            android:text="@string/loginButtonText"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:enabled="false"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/errorMessage"
+            android:textColor="@color/red"
+            android:text="@string/loginError"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+</FrameLayout>
