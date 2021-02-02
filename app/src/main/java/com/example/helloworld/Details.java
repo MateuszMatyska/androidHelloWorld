@@ -54,8 +54,8 @@ public class Details extends Fragment {
         TextView tempText = view.findViewById(R.id.temperature);
         TextView fallText = view.findViewById(R.id.fall);
 
-        tempText.setText(String.valueOf(temperature));
-        fallText.setText(String.valueOf(fall));
+        tempText.setText("Temperature " + String.valueOf(temperature));
+        fallText.setText("Fall " + String.valueOf(fall));
     }
 
     private void fetchData(View view) {

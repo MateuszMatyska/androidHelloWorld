@@ -33,6 +33,7 @@ import retrofit2.Response;
  */
 public class MyLocation extends Fragment {
     private ArrayList<City> cities = new ArrayList<City>();
+    private ArrayList<City> allCities = new ArrayList<City>();
     private AlertDialog dialog;
 
     public MyLocation() {
@@ -82,13 +83,8 @@ public class MyLocation extends Fragment {
     }
 
     private void onCreateDialog(View view) {
-        ArrayList<City> allCities = new ArrayList<City>();
-        allCities.add(new City(1,"Krakow"));
-        allCities.add(new City(2,"Warszawa"));
-        allCities.add(new City(3,"Katowice"));
-        allCities.add(new City(4,"Wrocław"));
 
-        final CharSequence[] citiesSet = { "Krakow","Warszawa","Katowice","Wrocław" };
+        final CharSequence[] citiesSet = getCitiesNames();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.pick_city)
@@ -105,6 +101,18 @@ public class MyLocation extends Fragment {
         dialog.show();
     }
 
+    private CharSequence[] getCitiesNames() {
+        ArrayList<String> names = new ArrayList<String>();
+
+        for(City city: allCities) {
+            names.add(city.getName());
+        }
+
+        CharSequence[] list = names.toArray(new CharSequence[names.size()]);
+
+        return list;
+    }
+
     private void refreshCityList(View view) {
         ListView list = view.findViewById(R.id.CityList);
         CityAdapter adapter = new CityAdapter(view.getContext(), cities);
@@ -119,9 +127,8 @@ public class MyLocation extends Fragment {
                 List<City> cityList = response.body();
 
                 for (int i = 0; i < cityList.size(); i++) {
-                    cities.add(cityList.get(i));
+                    allCities.add(cityList.get(i));
                 }
-                refreshCityList(view);
             }
 
             @Override

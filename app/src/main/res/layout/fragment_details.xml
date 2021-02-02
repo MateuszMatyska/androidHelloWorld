@@ -36,7 +36,8 @@
             android:shadowRadius="10.0"
             android:text="4"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginRight="15sp"/>
 
         <TextView
             android:id="@+id/fall"
@@ -49,7 +50,8 @@
             android:shadowRadius="10.0"
             android:text="4"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginLeft="15sp"/>
 
     </LinearLayout>
 
