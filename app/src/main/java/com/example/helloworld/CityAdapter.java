@@ -36,6 +36,7 @@ public class CityAdapter extends ArrayAdapter<City> {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("city", city.getName());
+                bundle.putString("id", String.valueOf(city.getId()));
                 Navigation.findNavController(v).navigate(R.id.nav_to_details,bundle);
             }
         });

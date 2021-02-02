@@ -8,6 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +72,33 @@ public class Details extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         TextView text = view.findViewById(R.id.Title);
         text.setText(getArguments().getString("city"));
+        fetchData(view);
         return view;
+    }
+
+    private void fillFetchedData(View view, float temperature, float fall) {
+        TextView tempText = view.findViewById(R.id.temperature);
+        TextView fallText = view.findViewById(R.id.fall);
+
+        tempText.setText(String.valueOf(temperature));
+        fallText.setText(String.valueOf(fall));
+    }
+
+    private void fetchData(View view) {
+        int id = Integer.parseInt(getArguments().getString("id"));
+        Call<Weather> call = ApiClient.getInstance().getMyApi().getWeather(id);
+        call.enqueue(new Callback<Weather>() {
+            @Override
+            public void onResponse(Call<Weather> call, Response<Weather> response) {
+                Weather weather = response.body();
+
+                fillFetchedData(view, weather.getTemperature(), weather.getFall());
+            }
+
+            @Override
+            public void onFailure(Call<Weather> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

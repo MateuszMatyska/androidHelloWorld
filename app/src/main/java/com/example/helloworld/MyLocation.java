@@ -13,10 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +54,9 @@ public class MyLocation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_location, container, false);
+        if(cities.isEmpty() == true){
+            fetchData(view);
+        }
         fillCityList(view);
         onFabButtonClick(view);
         return view;
@@ -53,9 +64,6 @@ public class MyLocation extends Fragment {
 
     private void fillCityList(View view) {
         ListView list = view.findViewById(R.id.CityList);
-
-        cities.add(new City("Krakow"));
-        cities.add(new City("Warszawa"));
 
         CityAdapter adapter = new CityAdapter(view.getContext(), cities);
 
@@ -75,10 +83,10 @@ public class MyLocation extends Fragment {
 
     private void onCreateDialog(View view) {
         ArrayList<City> allCities = new ArrayList<City>();
-        allCities.add(new City("Krakow"));
-        allCities.add(new City("Warszawa"));
-        allCities.add(new City("Katowice"));
-        allCities.add(new City("Wrocław"));
+        allCities.add(new City(1,"Krakow"));
+        allCities.add(new City(2,"Warszawa"));
+        allCities.add(new City(3,"Katowice"));
+        allCities.add(new City(4,"Wrocław"));
 
         final CharSequence[] citiesSet = { "Krakow","Warszawa","Katowice","Wrocław" };
 
@@ -99,7 +107,27 @@ public class MyLocation extends Fragment {
 
     private void refreshCityList(View view) {
         ListView list = view.findViewById(R.id.CityList);
-        CityAdapter adapter = new CityAdapter(view.getContext(), this.cities);
+        CityAdapter adapter = new CityAdapter(view.getContext(), cities);
         list.setAdapter(adapter);
+    }
+
+    private void fetchData(View view) {
+        Call<List<City>> call = ApiClient.getInstance().getMyApi().getCities();
+        call.enqueue(new Callback<List<City>>() {
+            @Override
+            public void onResponse(Call<List<City>> call, Response<List<City>> response) {
+                List<City> cityList = response.body();
+
+                for (int i = 0; i < cityList.size(); i++) {
+                    cities.add(cityList.get(i));
+                }
+                refreshCityList(view);
+            }
+
+            @Override
+            public void onFailure(Call<List<City>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
